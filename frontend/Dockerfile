@@ -26,7 +26,7 @@ EXPOSE 4200
 USER 1000
 RUN git clone https://github.com/lolobored/plex-on-the-go-frontend.git
 
-WORKDIR app/plex-on-the-go-frontend
+WORKDIR /app/plex-on-the-go-frontend
 
 RUN npm install
 
