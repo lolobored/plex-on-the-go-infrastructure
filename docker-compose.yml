@@ -8,7 +8,9 @@ services:
     environment:
       ES_JAVA_OPTS: "-Xmx256m -Xms256m"
     networks:
-      - plex-on-the-go
+      plex-on-the-go:
+        aliases:
+            - elasticsearch
 
   logstash:
     image: docker.elastic.co/logstash/logstash:6.2.3
@@ -35,10 +37,32 @@ services:
     ports:
       - "4664:8080"
     networks:
-      - plex-on-the-go
+      plex-on-the-go:
+        aliases:
+            - keycloak
     environment:
       KEYCLOAK_USER: "keycloak"
       KEYCLOAK_PASSWORD: "keycloak"
+
+  frontend:
+    build: frontend
+    hostname: frontend
+    ports:
+      - "4200:4200"
+    networks:
+      plex-on-the-go:
+        aliases:
+            - frontend
+
+  backend:
+    build: backend
+    hostname: backend
+    ports:
+      - "8080:8080"
+    networks:
+      plex-on-the-go:
+        aliases:
+            - backend
 
 networks:
   plex-on-the-go:
