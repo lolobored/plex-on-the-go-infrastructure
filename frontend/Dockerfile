@@ -12,23 +12,21 @@ ENV HOME "$USER_HOME_DIR"
 # npm 5 uses different userid when installing packages, as workaround su to node when installing
 # see https://github.com/npm/npm/issues/16766
 RUN set -xe \
-	&& mkdir -p $USER_HOME_DIR \
-    && chown $USER_ID $USER_HOME_DIR \
-    && chmod a+rw $USER_HOME_DIR \
+	&& mkdir -p /tmp \
+    && chown 1000 /tmp \
+    && chmod a+rw /tmp \
     && chown -R node /usr/local/lib /usr/local/include /usr/local/share /usr/local/bin \
-    && (cd "$USER_HOME_DIR"; su node -c "npm install -g @angular/cli@$NG_CLI_VERSION; npm install -g yarn; npm cache clean --force")
+    && (cd "/tmp"; su node -c "npm install -g @angular/cli@1.7.3; npm install -g yarn; npm cache clean --force")
 
 #not declared to avoid anonymous volume leak
-#VOLUME "$USER_HOME_DIR/.cache/yarn"
-#VOLUME "$APP_DIR/"
-WORKDIR $APP_DIR
-RUN chown -R $USER_ID $APP_DIR
+WORKDIR /app
+RUN chown -R 1000 /app
 EXPOSE 4200
 
-USER $USER_ID
+USER 1000
 RUN git clone https://github.com/lolobored/plex-on-the-go-frontend.git
 
-WORKDIR $APP_DIR/plex-on-the-go-frontend
+WORKDIR app/plex-on-the-go-frontend
 
 RUN npm install
 
