@@ -1,3 +1,5 @@
+** This project is invalid for now after changes to make it work specifically for my synology instance. SHould be back soon (ETA: end of April 2018) **
+
 # plex-on-the-go-infrastructure
 
 The plex-on-the-go infrastructure project enables to start automatically the whole stack with only one command line:
