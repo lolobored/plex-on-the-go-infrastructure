@@ -13,9 +13,14 @@ services:
             - elasticsearch
 
   keycloak:
-    image: jboss/keycloak
+    image: jboss/keycloak:4.0.0.Beta1
     ports:
       - "4664:8080"
+    environment:
+      DB_VENDOR: "H2"
+      PROXY_ADDRESS_FORWARDING: "true"
+      KEYCLOAK_USER: "keycloak"
+      KEYCLOAK_PASSWORD: "keycloak"
     networks:
       plex-on-the-go:
         aliases:
@@ -23,30 +28,6 @@ services:
     environment:
       KEYCLOAK_USER: "keycloak"
       KEYCLOAK_PASSWORD: "keycloak"
-
-  frontend:
-    build: frontend
-    hostname: frontend
-    ports:
-      - "4200:4200"
-    depends_on:
-      - backend
-    networks:
-      plex-on-the-go:
-        aliases:
-            - frontend
-
-  backend:
-    build: backend
-    hostname: backend
-    ports:
-      - "8888:8080"
-    depends_on:
-      - elasticsearch
-    networks:
-      plex-on-the-go:
-        aliases:
-            - backend
 
 networks:
   plex-on-the-go:
