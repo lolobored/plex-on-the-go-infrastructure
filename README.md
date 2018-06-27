@@ -7,4 +7,4 @@ It will start automatically:
 * the ELK stack (runnable on a synology)
 * a configured Keycloak (realm + users)
 
-** Instructions to follow **
+**Instructions to follow**
