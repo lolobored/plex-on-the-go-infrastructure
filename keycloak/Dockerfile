@@ -1,7 +1,5 @@
 FROM jboss/keycloak:4.0.0.Final
 
-ADD realm-export.json /opt/jboss/keycloak/
+ADD realm-export.json /opt/jboss/
 
-ENTRYPOINT [ "/opt/jboss/docker-entrypoint.sh" ]
-
-CMD ["-b", "0.0.0.0", "-Dkeycloak.import=/opt/jboss/keycloak/realm-export.json"]
+RUN sh -c "/opt/jboss/keycloak/bin/standalone.sh -Dkeycloak.migration.action=import -Dkeycloak.migration.provider=singleFile -Dkeycloak.migration.file=/opt/jboss/realm-export.json -Dkeycloak.migration.strategy=OVERWRITE_EXISTING -Dkeycloak.migration.realmName=plex &" && sleep 45 
