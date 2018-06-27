@@ -13,21 +13,18 @@ services:
             - elasticsearch
 
   keycloak:
-    image: jboss/keycloak:4.0.0.Beta1
+    build: keycloak
     ports:
       - "4664:8080"
     environment:
       - DB_VENDOR=H2
-      - PROXY_ADDRESS_FORWARDING=true
+      - PROXY_ADDRESS_FORWARDING=false
       - KEYCLOAK_USER=keycloak
       - KEYCLOAK_PASSWORD=keycloak
     networks:
       plex-on-the-go:
         aliases:
             - keycloak
-    environment:
-      KEYCLOAK_USER: "keycloak"
-      KEYCLOAK_PASSWORD: "keycloak"
 
 networks:
   plex-on-the-go:
